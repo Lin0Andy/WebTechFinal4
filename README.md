@@ -36,11 +36,11 @@ To set up the D&D Spell Book application, follow these steps:
 ```npm install```
 
 4. Set up environment variables by creating a `.env` file in the root directory:
-MONGODB_API=CJpsh8s2sz7ka4WcsXKYvlfEg8Afz0NhEhuP3bPPVeiOG0mKMRT2ieMmjSbq40iU
-MONGODB_CON_STR=""
-SESSION_SECRET=""
-PORT=""
-TRIVIA_API_URL=""
+<p>MONGODB_API=CJpsh8s2sz7ka4WcsXKYvlfEg8Afz0NhEhuP3bPPVeiOG0mKMRT2ieMmjSbq40iU</p>
+<p>MONGODB_CON_STR=""</p>
+<p>SESSION_SECRET=""</p>
+<p>PORT=""</p>
+<p>TRIVIA_API_URL=""</p>
 
 5. Start the application:
 ```npm start```
