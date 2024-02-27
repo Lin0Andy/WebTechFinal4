@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Spell Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h1>D&D Spell Details</h1>
+
+        <!-- Display spell details -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><%= spell.name %></h5>
+                <% if (spell.desc && spell.desc.length > 0) { %>
+                    <p class="card-text"><strong>Description:</strong> <%= spell.desc.join(', ') %></p>
+                <% } %>
+                <% if (spell.higher_level) { %>
+                    <p class="card-text"><strong>Higher Level:</strong> <%= spell.higher_level.join(', ') %></p>
+                <% } %>
+                <% if (spell.range) { %>
+                    <p class="card-text"><strong>Range:</strong> <%= spell.range %></p>
+                <% } %>
+                <% if (spell.components && spell.components.length > 0) { %>
+                    <p class="card-text"><strong>Components:</strong> <%= spell.components.join(', ') %></p>
+                <% } %>
+                <% if (spell.material) { %>
+                    <p class="card-text"><strong>Material:</strong> <%= spell.material %></p>
+                <% } %>
+                <% if (spell.ritual) { %>
+                    <p class="card-text"><strong>Ritual:</strong> <%= spell.ritual %></p>
+                <% } %>
+                <% if (spell.duration) { %>
+                    <p class="card-text"><strong>Duration:</strong> <%= spell.duration %></p>
+                <% } %>
+                <% if (spell.concentration) { %>
+                    <p class="card-text"><strong>Concentration:</strong> <%= spell.concentration %></p>
+                <% } %>
+                <% if (spell.casting_time) { %>
+                    <p class="card-text"><strong>Casting Time:</strong> <%= spell.casting_time %></p>
+                <% } %>
+                <% if (spell.level) { %>
+                    <p class="card-text"><strong>Level:</strong> <%= spell.level %></p>
+                <% } %>
+                <% if (spell.attack_type) { %>
+                    <p class="card-text"><strong>Attack Type:</strong> <%= spell.attack_type %></p>
+                <% } %>
+                <% if (spell.damage) { %>
+                    <p class="card-text"><strong>Damage Type:</strong> <%= spell.damage.damage_type.name %></p>
+                    <p class="card-text"><strong>Damage at Slot Level:</strong>
+                        <% Object.entries(spell.damage.damage_at_slot_level).forEach(([key, value]) => { %>
+                            Level <%= key %>: <%= value %><br>
+                        <% }) %>
+                    </p>
+                <% } %>
+                <% if (spell.school) { %>
+                    <p class="card-text"><strong>School:</strong> <%= spell.school.name %></p>
+                <% } %>
+                <% if (spell.classes && spell.classes.length > 0) { %>
+                    <p class="card-text"><strong>Classes:</strong>
+                        <% spell.classes.forEach(classItem => { %>
+                            <%= classItem.name %> <br>
+                        <% }) %>
+                    </p>
+                <% } %>
+                <% if (spell.subclasses && spell.subclasses.length > 0) { %>
+                    <p class="card-text"><strong>Subclasses:</strong>
+                        <% spell.subclasses.forEach(subclass => { %>
+                            <%= subclass.name %> <br>
+                        <% }) %>
+                    </p>
+                <% } %>
+                <a href="https://www.dnd5eapi.co<%= spell.url %>" class="btn btn-primary">API Link</a>
+            </div>
+        </div>
+    </div>
+
+
+    <%- include('partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

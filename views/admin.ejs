@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h1 class="mt-5">User Management</h1>
+
+        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="list-users-tab" data-toggle="tab" href="#list-users" role="tab" aria-controls="list-users" aria-selected="true">List Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="add-user-tab" data-toggle="tab" href="#add-user" role="tab" aria-controls="add-user" aria-selected="false">Add User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="edit-user-tab" data-toggle="tab" href="#edit-user" role="tab" aria-controls="edit-user" aria-selected="false">Edit User</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-4">
+            <!-- List Users Tab -->
+            <div class="tab-pane fade show active" id="list-users" role="tabpanel" aria-labelledby="list-users-tab">
+                <div class="col-md-6">
+                    <h2>List of Users</h2>
+                    <ul id="userList" class="list-group">
+                        <% users.forEach(user => { %>
+                            <li class="list-group-item">
+                                Username: <%= user.username %>, Admin: <%= user.admin_status ? 'Yes' : 'No' %>
+                                <form action="/admin/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline">
+                                    <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                                </form>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Add User Tab -->
+            <div class="tab-pane fade" id="add-user" role="tabpanel" aria-labelledby="add-user-tab">
+                <div class="col-md-6">
+                    <h2>Add New User</h2>
+                    <form id="addUserForm" action="/admin/users" method="POST">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" id="admin_status" name="admin_status" class="form-check-input">
+                            <label class="form-check-label" for="admin_status">Admin Status</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit User Tab -->
+            <div class="tab-pane fade" id="edit-user" role="tabpanel" aria-labelledby="edit-user-tab">
+                <div class="col-md-6">
+                    <h2>Edit User</h2>
+                    <% users.forEach(user => { %>
+                        <form id="editUserForm" action="/admin/users/<%= user._id %>" method="POST">
+                            <div class="form-group">
+                                <label for="edit-username">Username:</label>
+                                <input type="text" id="edit-username" name="edit-username" class="form-control" value="<%= user.username %>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-password">New Password:</label>
+                                <input type="password" id="edit-password" name="edit-password" class="form-control" required>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" id="edit-admin_status" name="edit-admin_status" class="form-check-input" <% if (user.admin_status) { %> checked <% } %>>
+                                <label class="form-check-label" for="edit-admin_status">Admin Status</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update User</button>
+                        </form>
+                        <hr>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Main Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Quiz Main Page</h1>
+        <form action="/quiz/start" method="POST">
+<!--            <div class="form-group">-->
+<!--                <label for="amount">Number of Questions:</label>-->
+<!--                <select id="amount" name="amount" class="form-control" required>-->
+<!--                    <option value="10">10</option>-->
+<!--                    <option value="20">20</option>-->
+<!--                    <option value="40">40</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="category">Category:</label>-->
+<!--                <select id="category" name="category" class="form-control" required>-->
+<!--                    <option value="9">General Knowledge</option>-->
+<!--                    <option value="10">Entertainment: Books</option>-->
+<!--                    <option value="16">Boardgames</option>-->
+<!--                </select>-->
+<!--            </div>-->
+            <div class="form-group">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty" name="difficulty" class="form-control" required>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Start Quiz</button>
+            <a href="/highest_scores" class="btn btn-secondary">View Scores</a>
+        </form>
+    </div>
+
+
+    <%- include('partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

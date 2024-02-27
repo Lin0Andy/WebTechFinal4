@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Welcome to the Marketplace</h1>
+        <% if (isAdmin) { %>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <form action="/addItem" method="get">
+                            <button type="submit" class="btn btn-primary">Add New Item</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <div class="row">
+            <% items.forEach(item => { %>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div id="carousel<%= item.id %>" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <% item.images.forEach((image, index) => { %>
+                                    <div class="carousel-item <% if (index === 0) { %>active<% } %>">
+                                        <img src="<%= image %>" class="d-block w-100" alt="Image <%= index + 1 %>">
+                                    </div>
+                                <% }); %>
+                            </div>
+                            <a class="carousel-control-prev" href="#carousel<%= item.id %>" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel<%= item.id %>" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= item.names %></h5>
+                            <p class="card-text"><%= item.descriptions %></p>
+                            <p class="card-text">Amount: <%= item.amount %></p>
+                            <p class="card-text">Price: $<%= item.price %></p>
+                            <% if (isAdmin) { %>
+                                <a href="/items/<%= item.id %>" class="btn btn-primary">Update Item</a>
+                            <% } %>
+                            <a href="#" class="btn btn-primary" onclick="alert('not available')">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

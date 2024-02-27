@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Scores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+
+    <div class="container">
+        <h1 class="mt-4 mb-4">Top 10 Scores</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Score</th>
+                <th scope="col">Username</th>
+                <th scope="col" style="display: none">Trivia ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% topScores.forEach((score, index) => { %>
+                <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= score.score %></td>
+                    <td><%= score.username%></td>
+                    <td style="display: none"><%= score._id %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+
+    <%- include('partials/footer') %>
+</body>
+</html>

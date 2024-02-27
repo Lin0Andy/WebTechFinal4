@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <%- include('partials/style') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+
+    <div class="container">
+        <h1 class="mt-4 mb-4">Trivia Quiz</h1>
+        <div id="quiz-container">
+            <% if (quiz.questions && quiz.questions.length > 0) { %>
+                <form action="/quiz/submit" method="POST">
+                    <input type="hidden" name="triviaId" value="<%= quiz._id %>">
+                    <% quiz.questions.forEach((question, index) => { %>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Question <%= index + 1 %>:</strong> <%= question.question %></h5>
+                                <ul class="list-unstyled">
+                                    <% const options = question.incorrect_answers.concat(question.correct_answer); %>
+                                    <% options.forEach(option => { %>
+                                        <li class="form-check">
+                                            <input class="form-check-input" type="radio" name="answers[<%= index %>]" id="option<%= index %>-<%= options.indexOf(option) %>" value="<%= option %>">
+                                            <label class="form-check-label" for="option<%= index %>-<%= options.indexOf(option) %>"><%= option %></label>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            </div>
+                        </div>
+                    <% }); %>
+
+                    <button type="submit" class="btn btn-primary">Submit Answers</button>
+                </form>
+            <% } else { %>
+                <p>No questions available.</p>
+            <% } %>
+        </div>
+    </div>
+
+
+    <%- include('partials/footer') %>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="/" class="nav-link">Main</a>
+            </li>
+            <li class="nav-item">
+                <a href="/dnd" class="nav-link">D&D Spells</a>
+            </li>
+            <li class="nav-item">
+                <a href="/items" class="nav-link">Marketplace</a>
+            </li>
+            <li class="nav-item">
+                <a href="/quiz" class="nav-link">Quiz</a>
+            </li>
+            <li class="nav-item">
+                <a href="/quiz/top-scores" class="nav-link">Highest scores</a>
+            </li>
+            <li class="nav-item">
+                <% if (isAdmin) { %>
+                    <a href="/admin" class="nav-link">Admin Page</a>
+                <% } %>
+            </li>
+            <li class="nav-item">
+                <form action="/logout" method="get" class="nav-link">
+                    <button type="submit" class="btn btn-primary">Log Out</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form action="/login" method="get" class="nav-link">
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
