@@ -12,7 +12,15 @@
 
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Quiz Main Page</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="text-center mb-4">
+            <% if (language === 'en') { %>
+                Quiz Main Page
+            <% } else if (language === 'ru') { %>
+                Главная страница викторины
+            <% } %>
+        </h1>
         <form action="/quiz/start" method="POST">
 <!--            <div class="form-group">-->
 <!--                <label for="amount">Number of Questions:</label>-->
@@ -31,22 +39,43 @@
 <!--                </select>-->
 <!--            </div>-->
             <div class="form-group">
-                <label for="difficulty">Difficulty:</label>
+                <label for="difficulty">
+                    <% if (language === 'en') { %>
+                        Difficulty:
+                    <% } else if (language === 'ru') { %>
+                        Сложность:
+                    <% } %>
+                </label>
                 <select id="difficulty" name="difficulty" class="form-control" required>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
+                    <option value="easy">
+                        <% if (language === 'en') { %> Easy <% } else if (language === 'ru') { %> Легко <% } %>
+                    </option>
+                    <option value="medium">
+                        <% if (language === 'en') { %> Medium <% } else if (language === 'ru') { %> Средне <% } %>
+                    </option>
+                    <option value="hard">
+                        <% if (language === 'en') { %> Hard <% } else if (language === 'ru') { %> Тяжело <% } %>
+                    </option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Start Quiz</button>
-            <a href="/highest_scores" class="btn btn-secondary">View Scores</a>
+            <button type="submit" class="btn btn-primary">
+                <% if (language === 'en') { %> Start Quiz <% } else if (language === 'ru') { %> Начать викторину <% } %>
+            </button>
+            <a href="/highest_scores" class="btn btn-secondary">
+                <% if (language === 'en') { %> View Scores <% } else if (language === 'ru') { %> Просмотреть баллы <% } %>
+            </a>
         </form>
     </div>
 
 
     <%- include('partials/footer') %>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

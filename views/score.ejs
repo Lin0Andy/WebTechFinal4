@@ -12,16 +12,40 @@
 
 
     <div class="container">
-        <h1 class="mt-4 mb-4">Trivia Score</h1>
+        <h1 class="mt-4 mb-4">
+            <% if (language === 'en') { %>
+                Trivia Score
+            <% } else if (language === 'ru') { %>
+                Результат викторины
+            <% } %>
+        </h1>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Score: <%= quiz.score %></h5>
-                <p class="card-text" style="display: none">Trivia ID: <%= quiz._id %></p>
+                <h5 class="card-title">
+                    <% if (language === 'en') { %>
+                        Score: <%= quiz.score %>
+                    <% } else if (language === 'ru') { %>
+                        Очки: <%= quiz.score %>
+                    <% } %>
+                </h5>
+                <p class="card-text" style="display: none">
+                    Trivia ID: <%= quiz._id %>
+                </p>
             </div>
         </div>
     </div>
 
 
     <%- include('partials/footer') %>
+
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -19,21 +19,29 @@
             <li class="nav-item">
                 <a href="/quiz/top-scores" class="nav-link">Highest scores</a>
             </li>
-            <li class="nav-item">
-                <% if (isAdmin) { %>
-                    <a href="/admin" class="nav-link">Admin Page</a>
-                <% } %>
-            </li>
-            <li class="nav-item">
-                <form action="/logout" method="get" class="nav-link">
-                    <button type="submit" class="btn btn-primary">Log Out</button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <form action="/login" method="get" class="nav-link">
-                    <button type="submit" class="btn btn-primary">Log In</button>
-                </form>
-            </li>
+            <% if (loggedIn) { %>
+                <li class="nav-item">
+                    <% if (isAdmin) { %>
+                        <a href="/admin" class="nav-link">Admin Page</a>
+                    <% } %>
+                </li>
+                <li class="nav-item">
+                    <form action="/logout" method="get" class="nav-link">
+                        <button type="submit" class="btn btn-primary">Log Out</button>
+                    </form>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <form action="/login" method="get" class="nav-link">
+                        <button type="submit" class="btn btn-primary">Log In</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/signup" method="get" class="nav-link">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </form>
+                </li>
+            <% } %>
         </ul>
     </div>
 </nav>

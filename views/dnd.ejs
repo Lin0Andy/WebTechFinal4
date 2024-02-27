@@ -10,24 +10,56 @@
 <body>
     <%- include('partials/navbar') %>
     <div class="container">
-        <h1>D&D Spells</h1>
+        <%- include('partials/selectLang') %>
 
+        <h1>
+            <% if (language === 'en') { %>
+                D&D Spells
+            <% } else if (language === 'ru') { %>
+                Заклинания D&D
+            <% } %>
+        </h1>
         <form action="/dnd/search" method="GET" class="mt-4">
             <div class="form-row align-items-center">
                 <div class="col-auto">
-                    <label class="sr-only" for="spellName">Enter Spell Name:</label>
-                    <input type="text" class="form-control" id="spellName" name="spellName" placeholder="Spell Name">
+                    <% if (language === 'en') { %>
+                        <label class="sr-only" for="spellName">Enter Spell Name:</label>
+                        <input type="text" class="form-control" id="spellName" name="spellName" placeholder="Spell Name">
+                    <% } else if (language === 'ru') { %>
+                        <label class="sr-only" for="spellName">Введите название заклинания:</label>
+                        <input type="text" class="form-control" id="spellName" name="spellName" placeholder="Название заклинания">
+                    <% } %>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary">
+                        <% if (language === 'en') { %>
+                            Search
+                        <% } else if (language === 'ru') { %>
+                            Поиск
+                        <% } %>
+                    </button>
                 </div>
             </div>
         </form>
-        <p>For example: Acid Arrow or Aid</p>
+        <p>
+            <% if (language === 'en') { %>
+                For example:
+            <% } else if (language === 'ru') { %>
+                Например:
+            <% } %>
+                Acid Arrow or Aid
+        </p>
     </div>
+
 
     <%- include('partials/footer') %>
 
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

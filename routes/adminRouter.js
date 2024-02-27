@@ -5,10 +5,13 @@ const bcrypt = require("bcrypt");
 
 // List all users
 router.get('/admin', async (req, res) => {
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
     try {
         const users = await User.find();
-        const defaultUser = { _id: '', username: '', admin_status: false }; // Define a default user object
-        res.render('admin', { users, user: defaultUser });
+        const defaultUser = { _id: '', username: '', admin_status: false };
+        res.render('admin', { users, user: defaultUser, loggedIn, language });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

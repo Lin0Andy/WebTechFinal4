@@ -11,13 +11,28 @@
     <%- include('partials/navbar') %>
 
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Welcome to the Marketplace</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="text-center mb-4">
+            <% if (language === 'en') { %>
+                Welcome to the Marketplace
+            <% } else if (language === 'ru') { %>
+                Добро пожаловать на рынок
+            <% } %>
+        </h1>
+
         <% if (isAdmin) { %>
             <div class="container mt-4">
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <form action="/addItem" method="get">
-                            <button type="submit" class="btn btn-primary">Add New Item</button>
+                            <button type="submit" class="btn btn-primary">
+                                <% if (language === 'en') { %>
+                                    Add New Item
+                                <% } else if (language === 'ru') { %>
+                                    Добавить новый товар
+                                <% } %>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -48,21 +63,52 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= item.names %></h5>
                             <p class="card-text"><%= item.descriptions %></p>
-                            <p class="card-text">Amount: <%= item.amount %></p>
-                            <p class="card-text">Price: $<%= item.price %></p>
+                            <p class="card-text">
+                                <% if (language === 'en') { %>
+                                    Amount: <%= item.amount %>
+                                <% } else if (language === 'ru') { %>
+                                    Количество: <%= item.amount %>
+                                <% } %>
+                            </p>
+                            <p class="card-text">
+                                <% if (language === 'en') { %>
+                                    Price: $<%= item.price %>
+                                <% } else if (language === 'ru') { %>
+                                    Цена: $<%= item.price %>
+                                <% } %>
+                            </p>
                             <% if (isAdmin) { %>
-                                <a href="/items/<%= item.id %>" class="btn btn-primary">Update Item</a>
+                                <a href="/items/<%= item.id %>" class="btn btn-primary">
+                                    <% if (language === 'en') { %>
+                                        Update Item
+                                    <% } else if (language === 'ru') { %>
+                                        Обновить товар
+                                    <% } %>
+                                </a>
                             <% } %>
-                            <a href="#" class="btn btn-primary" onclick="alert('not available')">Buy Now</a>
+                            <a href="#" class="btn btn-primary" onclick="alert('not available')">
+                                <% if (language === 'en') { %>
+                                    Buy Now
+                                <% } else if (language === 'ru') { %>
+                                    Купить сейчас
+                                <% } %>
+                            </a>
                         </div>
                     </div>
                 </div>
             <% }); %>
         </div>
-    </div>
 
-    <%- include('partials/footer') %>
 
+
+        <%- include('partials/footer') %>
+
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

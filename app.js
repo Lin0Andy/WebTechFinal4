@@ -1,5 +1,5 @@
 const express = require("express");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser")
 const dotenv = require('dotenv');
 const session = require('express-session');
 const mongoose = require('mongoose')
@@ -47,35 +47,50 @@ mongoose.connect(atlas_con_string)
 
 
 app.get('/', (req, res) => {
-    res.render('main')
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
+    res.render('main', { language, loggedIn });
 })
 
 app.get('/admin', requireAuth, requireAdmin, async (req, res) => {
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         const currentUserId = req.session.userId;
         console.log(currentUserId)
         const users = await User.find({ _id: { $ne: currentUserId }, deletion_date: null });
-        res.render('admin', { users });
+        res.render('admin', { users, language, loggedIn });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
 app.get('/addItem', requireAuth, requireAdmin, (req, res) => {
-    res.render('addItem')
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
+    res.render('addItem', { language, loggedIn })
 })
 
 app.get("/items", requireAuth, async (req, res) => {
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
     const isAdmin = req.session.isAdmin;
     try {
         const items = await Item.find({ deletion_date: null });
-        res.render('items', { items, isAdmin})
+        res.render('items', { items, isAdmin, language, loggedIn })
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
 app.post("/items", requireAuth, async (req, res) => {
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
     const item = new Item({
         category: req.body.category,
         amount: req.body.amount,
@@ -95,6 +110,9 @@ app.post("/items", requireAuth, async (req, res) => {
 
 app.get('/items/:id', requireAuth, requireAdmin, async (req, res) => {
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         const itemId = req.params.id;
         const item = await Item.findById(itemId);
 
@@ -102,7 +120,7 @@ app.get('/items/:id', requireAuth, requireAdmin, async (req, res) => {
             return res.status(404).send('Item not found');
         }
 
-        res.render('updateItem', { item });
+        res.render('updateItem', { item, language, loggedIn });
     } catch (error) {
         console.error('Error fetching item:', error);
         res.status(500).send('Internal Server Error');
@@ -111,6 +129,9 @@ app.get('/items/:id', requireAuth, requireAdmin, async (req, res) => {
 
 app.patch("/items/:id", requireAuth, requireAdmin, getItem, async (req, res) => {
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         if (req.body.category != null) {
             res.item.category = req.body.category;
         }
@@ -141,6 +162,9 @@ app.patch("/items/:id", requireAuth, requireAdmin, getItem, async (req, res) => 
 
 app.delete("/items/:id", requireAdmin, requireAuth, getItem, async (req, res) => {
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         res.item.deletion_date = new Date();
         await res.item.save();
         res.json({ message: "Item deleted" });
@@ -151,6 +175,9 @@ app.delete("/items/:id", requireAdmin, requireAuth, getItem, async (req, res) =>
 async function getItem(req, res, next) {
     let item;
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         item = await Item.findById(req.params.id);
         if (!item) {
             return res.status(404).json({ message: "Item not found" });
@@ -165,11 +192,17 @@ async function getItem(req, res, next) {
 
 
 app.get('/quiz', requireAuth, (req, res) => {
-    res.render('quiz_main');
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
+    res.render('quiz_main', { language, loggedIn });
 });
 
 app.post('/quiz/start', requireAuth, async (req, res) => {
     const { difficulty, amount } = req.body;
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
 
     try {
         const response = await axios.get(`${triviaAPIURL}?amount=10&category=16&difficulty=${difficulty}&type=multiple`);
@@ -192,7 +225,7 @@ app.post('/quiz/start', requireAuth, async (req, res) => {
 
         await quiz.save();
 
-        res.render('trivia_quiz', { quiz });
+        res.render('trivia_quiz', { quiz, language, loggedIn  });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -203,12 +236,15 @@ app.post('/quiz/submit', requireAuth, async (req, res) => {
     const { triviaId, answers } = req.body;
 
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         const quiz = await Quiz.findById(triviaId);
 
         if (!quiz) {
             return res.status(404).json({ message: 'Trivia not found' });
         } else if (quiz.score > 0) {
-            res.render('score', { quiz })
+            res.render('score', { quiz, language, loggedIn })
         }
 
 
@@ -224,7 +260,7 @@ app.post('/quiz/submit', requireAuth, async (req, res) => {
         await quiz.save();
 
         // res.json({ message: 'Answers submitted successfully', quiz });
-        res.render('score', { quiz })
+        res.render('score', { quiz, language, loggedIn })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -233,8 +269,11 @@ app.post('/quiz/submit', requireAuth, async (req, res) => {
 
 app.get('/quiz/top-scores', requireAuth, async (req, res) => {
     try {
+        const language = req.query.lang || 'en';
+        const loggedIn = req.session.username !== undefined ? true : false;
+
         const topScores = await Quiz.find().sort({ score: -1 }).limit(10);
-        res.render('top_scores', { topScores });
+        res.render('top_scores', { topScores, language, loggedIn  });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -243,12 +282,21 @@ app.get('/quiz/top-scores', requireAuth, async (req, res) => {
 
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
+    res.render('login', { language, loggedIn  });
 });
 app.get('/signup', (req, res) => {
-    res.render('signup');
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
+    res.render('signup', { language, loggedIn });
 });
 app.get('/logout', (req, res) => {
+    const language = req.query.lang || 'en';
+    const loggedIn = req.session.username !== undefined ? true : false;
+
     req.session.destroy(err => {
         if (err) {
             console.error('Error destroying session:', err);

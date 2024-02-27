@@ -11,17 +11,43 @@
     <%- include('partials/navbar') %>
 
     <div class="container">
-        <h1 class="mt-5">User Management</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="mt-5">
+            <% if (language === 'en') { %>
+                User Management
+            <% } else if (language === 'ru') { %>
+                Управление пользователями
+            <% } %>
+        </h1>
 
         <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="list-users-tab" data-toggle="tab" href="#list-users" role="tab" aria-controls="list-users" aria-selected="true">List Users</a>
+                <a class="nav-link active" id="list-users-tab" data-toggle="tab" href="#list-users" role="tab" aria-controls="list-users" aria-selected="true">
+                    <% if (language === 'en') { %>
+                        List Users
+                    <% } else if (language === 'ru') { %>
+                        Список пользователей
+                    <% } %>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="add-user-tab" data-toggle="tab" href="#add-user" role="tab" aria-controls="add-user" aria-selected="false">Add User</a>
+                <a class="nav-link" id="add-user-tab" data-toggle="tab" href="#add-user" role="tab" aria-controls="add-user" aria-selected="false">
+                    <% if (language === 'en') { %>
+                        Add User
+                    <% } else if (language === 'ru') { %>
+                        Добавить пользователя
+                    <% } %>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="edit-user-tab" data-toggle="tab" href="#edit-user" role="tab" aria-controls="edit-user" aria-selected="false">Edit User</a>
+                <a class="nav-link" id="edit-user-tab" data-toggle="tab" href="#edit-user" role="tab" aria-controls="edit-user" aria-selected="false">
+                    <% if (language === 'en') { %>
+                        Edit User
+                    <% } else if (language === 'ru') { %>
+                        Редактировать пользователя
+                    <% } %>
+                </a>
             </li>
         </ul>
 
@@ -29,13 +55,29 @@
             <!-- List Users Tab -->
             <div class="tab-pane fade show active" id="list-users" role="tabpanel" aria-labelledby="list-users-tab">
                 <div class="col-md-6">
-                    <h2>List of Users</h2>
+                    <h2>
+                        <% if (language === 'en') { %>
+                            List of Users
+                        <% } else if (language === 'ru') { %>
+                            Список пользователей
+                        <% } %>
+                    </h2>
                     <ul id="userList" class="list-group">
                         <% users.forEach(user => { %>
                             <li class="list-group-item">
-                                Username: <%= user.username %>, Admin: <%= user.admin_status ? 'Yes' : 'No' %>
+                                <% if (language === 'en') { %>
+                                    Username: <%= user.username %>, Admin: <%= user.admin_status ? 'Yes' : 'No' %>
+                                <% } else if (language === 'ru') { %>
+                                    Имя пользователя: <%= user.username %>, Администратор: <%= user.admin_status ? 'Да' : 'Нет' %>
+                                <% } %>
                                 <form action="/admin/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline">
-                                    <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm ml-2">
+                                        <% if (language === 'en') { %>
+                                            Delete
+                                        <% } else if (language === 'ru') { %>
+                                            Удалить
+                                        <% } %>
+                                    </button>
                                 </form>
                             </li>
                         <% }); %>
@@ -46,21 +88,51 @@
             <!-- Add User Tab -->
             <div class="tab-pane fade" id="add-user" role="tabpanel" aria-labelledby="add-user-tab">
                 <div class="col-md-6">
-                    <h2>Add New User</h2>
+                    <h2>
+                        <% if (language === 'en') { %>
+                            Add New User
+                        <% } else if (language === 'ru') { %>
+                            Добавить нового пользователя
+                        <% } %>
+                    </h2>
                     <form id="addUserForm" action="/admin/users" method="POST">
                         <div class="form-group">
-                            <label for="username">Username:</label>
+                            <label for="username">
+                                <% if (language === 'en') { %>
+                                    Username:
+                                <% } else if (language === 'ru') { %>
+                                    Имя пользователя:
+                                <% } %>
+                            </label>
                             <input type="text" id="username" name="username" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password:</label>
+                            <label for="password">
+                                <% if (language === 'en') { %>
+                                    Password:
+                                <% } else if (language === 'ru') { %>
+                                    Пароль:
+                                <% } %>
+                            </label>
                             <input type="password" id="password" name="password" class="form-control" required>
                         </div>
                         <div class="form-group form-check">
                             <input type="checkbox" id="admin_status" name="admin_status" class="form-check-input">
-                            <label class="form-check-label" for="admin_status">Admin Status</label>
+                            <label class="form-check-label" for="admin_status">
+                                <% if (language === 'en') { %>
+                                    Admin Status
+                                <% } else if (language === 'ru') { %>
+                                    Статус администратора
+                                <% } %>
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+                        <button type="submit" class="btn btn-primary">
+                            <% if (language === 'en') { %>
+                                Add User
+                            <% } else if (language === 'ru') { %>
+                                Добавить пользователя
+                            <% } %>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -68,22 +140,52 @@
             <!-- Edit User Tab -->
             <div class="tab-pane fade" id="edit-user" role="tabpanel" aria-labelledby="edit-user-tab">
                 <div class="col-md-6">
-                    <h2>Edit User</h2>
+                    <h2>
+                        <% if (language === 'en') { %>
+                            Edit User
+                        <% } else if (language === 'ru') { %>
+                            Редактировать пользователя
+                        <% } %>
+                    </h2>
                     <% users.forEach(user => { %>
                         <form id="editUserForm" action="/admin/users/<%= user._id %>" method="POST">
                             <div class="form-group">
-                                <label for="edit-username">Username:</label>
+                                <label for="edit-username">
+                                    <% if (language === 'en') { %>
+                                        Username:
+                                    <% } else if (language === 'ru') { %>
+                                        Имя пользователя:
+                                    <% } %>
+                                </label>
                                 <input type="text" id="edit-username" name="edit-username" class="form-control" value="<%= user.username %>" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit-password">New Password:</label>
+                                <label for="edit-password">
+                                    <% if (language === 'en') { %>
+                                        New Password:
+                                    <% } else if (language === 'ru') { %>
+                                        Новый пароль:
+                                    <% } %>
+                                </label>
                                 <input type="password" id="edit-password" name="edit-password" class="form-control" required>
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" id="edit-admin_status" name="edit-admin_status" class="form-check-input" <% if (user.admin_status) { %> checked <% } %>>
-                                <label class="form-check-label" for="edit-admin_status">Admin Status</label>
+                                <label class="form-check-label" for="edit-admin_status">
+                                    <% if (language === 'en') { %>
+                                        Admin Status
+                                    <% } else if (language === 'ru') { %>
+                                        Статус администратора
+                                    <% } %>
+                                </label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update User</button>
+                            <button type="submit" class="btn btn-primary">
+                                <% if (language === 'en') { %>
+                                    Update User
+                                <% } else if (language === 'ru') { %>
+                                    Обновить пользователя
+                                <% } %>
+                            </button>
                         </form>
                         <hr>
                     <% }); %>
@@ -92,8 +194,15 @@
         </div>
     </div>
 
+
     <%- include('partials/footer') %>
 
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

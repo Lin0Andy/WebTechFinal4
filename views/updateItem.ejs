@@ -11,47 +11,116 @@
     <%- include('partials/navbar') %>
 
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Update Item</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="text-center mb-4">
+            <% if (language === 'en') { %>
+                Update Item
+            <% } else if (language === 'ru') { %>
+                Обновить товар
+            <% } %>
+        </h1>
+
         <form action="/items/<%= item.id %>?_method=PATCH" method="POST">
             <div class="form-group">
-                <label for="category">Category</label>
+                <label for="category">
+                    <% if (language === 'en') { %>
+                        Category
+                    <% } else if (language === 'ru') { %>
+                        Категория
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="category" name="category" value="<%= item.category %>" required>
             </div>
             <div class="form-group">
-                <label for="amount">Amount</label>
+                <label for="amount">
+                    <% if (language === 'en') { %>
+                        Amount
+                    <% } else if (language === 'ru') { %>
+                        Количество
+                    <% } %>
+                </label>
                 <input type="number" class="form-control" id="amount" name="amount" value="<%= item.amount %>" required>
             </div>
             <div class="form-group">
-                <label for="price">Price</label>
+                <label for="price">
+                    <% if (language === 'en') { %>
+                        Price
+                    <% } else if (language === 'ru') { %>
+                        Цена
+                    <% } %>
+                </label>
                 <input type="number" class="form-control" id="price" name="price" value="<%= item.price %>" required>
             </div>
             <div class="form-group">
-                <label for="image1">Image 1 URL</label>
+                <label for="image1">
+                    <% if (language === 'en') { %>
+                        Image 1 URL
+                    <% } else if (language === 'ru') { %>
+                        URL изображения 1
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="image1" name="image1" value="<%= item.images[0] %>" required>
             </div>
             <div class="form-group">
-                <label for="image2">Image 2 URL</label>
+                <label for="image2">
+                    <% if (language === 'en') { %>
+                        Image 2 URL
+                    <% } else if (language === 'ru') { %>
+                        URL изображения 2
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="image2" name="image2" value="<%= item.images[1] %>" required>
             </div>
             <div class="form-group">
-                <label for="image3">Image 3 URL</label>
+                <label for="image3">
+                    <% if (language === 'en') { %>
+                        Image 3 URL
+                    <% } else if (language === 'ru') { %>
+                        URL изображения 3
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="image3" name="image3" value="<%= item.images[2] %>" required>
             </div>
             <div class="form-group">
-                <label for="names">Names</label>
+                <label for="names">
+                    <% if (language === 'en') { %>
+                        Names
+                    <% } else if (language === 'ru') { %>
+                        Названия
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="names" name="names" value="<%= item.names %>" required>
             </div>
             <div class="form-group">
-                <label for="descriptions">Descriptions</label>
+                <label for="descriptions">
+                    <% if (language === 'en') { %>
+                        Descriptions
+                    <% } else if (language === 'ru') { %>
+                        Описания
+                    <% } %>
+                </label>
                 <input type="text" class="form-control" id="descriptions" name="descriptions" value="<%= item.descriptions %>" required>
             </div>
-            <button type="submit" class="btn btn-primary">Update Item</button>
+            <button type="submit" class="btn btn-primary">
+                <% if (language === 'en') { %>
+                    Update Item
+                <% } else if (language === 'ru') { %>
+                    Обновить товар
+                <% } %>
+            </button>
         </form>
     </div>
 
 
     <%- include('partials/footer') %>
 
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

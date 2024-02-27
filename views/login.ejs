@@ -11,23 +11,43 @@
     <%- include('partials/navbar') %>
 
     <div class="container login-container">
+        <%- include('partials/selectLang') %>
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Login
+                        <% if (language === 'en') { %>
+                            Login
+                        <% } else if (language === 'ru') { %>
+                            Вход
+                        <% } %>
                     </div>
                     <div class="card-body">
                         <form action="/user/login" method="POST">
                             <div class="form-group">
-                                <label for="username">Username:</label>
+                                <% if (language === 'en') { %>
+                                    <label for="username">Username:</label>
+                                <% } else if (language === 'ru') { %>
+                                    <label for="username">Имя пользователя:</label>
+                                <% } %>
                                 <input type="text" id="username" name="username" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="password">Password:</label>
+                                <% if (language === 'en') { %>
+                                    <label for="password">Password:</label>
+                                <% } else if (language === 'ru') { %>
+                                    <label for="password">Пароль:</label>
+                                <% } %>
                                 <input type="password" id="password" name="password" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary">
+                                <% if (language === 'en') { %>
+                                    Login
+                                <% } else if (language === 'ru') { %>
+                                    Войти
+                                <% } %>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -35,8 +55,15 @@
         </div>
     </div>
 
+
     <%- include('partials/footer') %>
 
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

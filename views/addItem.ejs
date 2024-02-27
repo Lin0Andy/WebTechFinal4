@@ -11,46 +11,99 @@
     <%- include('partials/navbar') %>
 
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Add New Item</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="text-center mb-4">
+            <% if (language === 'en') { %>
+                Add New Item
+            <% } else if (language === 'ru') { %>
+                Добавить новый товар
+            <% } %>
+        </h1>
         <form action="/items" method="POST">
             <div class="form-group">
-                <label for="category">Category</label>
+                <% if (language === 'en') { %>
+                    <label for="category">Category</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="category">Категория</label>
+                <% } %>
                 <input type="text" class="form-control" id="category" name="category" required>
             </div>
             <div class="form-group">
-                <label for="amount">Amount</label>
+                <% if (language === 'en') { %>
+                    <label for="amount">Amount</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="amount">Количество</label>
+                <% } %>
                 <input type="number" class="form-control" id="amount" name="amount" required>
             </div>
             <div class="form-group">
-                <label for="price">Price</label>
+                <% if (language === 'en') { %>
+                    <label for="price">Price</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="price">Цена</label>
+                <% } %>
                 <input type="number" class="form-control" id="price" name="price" required>
             </div>
             <div class="form-group">
-                <label for="image1">Image 1</label>
+                <% if (language === 'en') { %>
+                    <label for="image1">Image 1</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="image1">Изображение 1</label>
+                <% } %>
                 <input type="url" class="form-control" id="image1" name="image1" required>
             </div>
             <div class="form-group">
-                <label for="image2">Image 2</label>
+                <% if (language === 'en') { %>
+                    <label for="image2">Image 2</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="image2">Изображение 2</label>
+                <% } %>
                 <input type="url" class="form-control" id="image2" name="image2" required>
             </div>
             <div class="form-group">
-                <label for="image3">Image 3</label>
+                <% if (language === 'en') { %>
+                    <label for="image3">Image 3</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="image3">Изображение 3</label>
+                <% } %>
                 <input type="url" class="form-control" id="image3" name="image3" required>
             </div>
             <div class="form-group">
-                <label for="names">Names</label>
+                <% if (language === 'en') { %>
+                    <label for="names">Names</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="names">Названия</label>
+                <% } %>
                 <input type="text" class="form-control" id="names" name="names" required>
             </div>
             <div class="form-group">
-                <label for="descriptions">Descriptions</label>
+                <% if (language === 'en') { %>
+                    <label for="descriptions">Descriptions</label>
+                <% } else if (language === 'ru') { %>
+                    <label for="descriptions">Описания</label>
+                <% } %>
                 <input type="text" class="form-control" id="descriptions" name="descriptions" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add Item</button>
+            <button type="submit" class="btn btn-primary">
+                <% if (language === 'en') { %>
+                    Add Item
+                <% } else if (language === 'ru') { %>
+                    Добавить товар
+                <% } %>
+            </button>
         </form>
     </div>
 
+
     <%- include('partials/footer') %>
 
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

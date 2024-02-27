@@ -12,14 +12,46 @@
 
 
     <div class="container">
-        <h1 class="mt-4 mb-4">Top 10 Scores</h1>
+        <%- include('partials/selectLang') %>
+
+        <h1 class="mt-4 mb-4">
+            <% if (language === 'en') { %>
+                Top 10 Scores
+            <% } else if (language === 'ru') { %>
+                Топ 10 очков
+            <% } %>
+        </h1>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Rank</th>
-                <th scope="col">Score</th>
-                <th scope="col">Username</th>
-                <th scope="col" style="display: none">Trivia ID</th>
+                <th scope="col">
+                    <% if (language === 'en') { %>
+                        Rank
+                    <% } else if (language === 'ru') { %>
+                        Ранг
+                    <% } %>
+                </th>
+                <th scope="col">
+                    <% if (language === 'en') { %>
+                        Score
+                    <% } else if (language === 'ru') { %>
+                        Очки
+                    <% } %>
+                </th>
+                <th scope="col">
+                    <% if (language === 'en') { %>
+                        Username
+                    <% } else if (language === 'ru') { %>
+                        Имя пользователя
+                    <% } %>
+                </th>
+                <th scope="col" style="display: none">
+                    <% if (language === 'en') { %>
+                        Trivia ID
+                    <% } else if (language === 'ru') { %>
+                        Идентификатор викторины
+                    <% } %>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +59,7 @@
                 <tr>
                     <th scope="row"><%= index + 1 %></th>
                     <td><%= score.score %></td>
-                    <td><%= score.username%></td>
+                    <td><%= score.username %></td>
                     <td style="display: none"><%= score._id %></td>
                 </tr>
             <% }); %>
@@ -37,5 +69,15 @@
 
 
     <%- include('partials/footer') %>
+
+    <script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            window.location.href = window.location.pathname + '?lang=' + selectedLanguage;
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
